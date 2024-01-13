@@ -1,3 +1,7 @@
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+//
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -7,6 +11,9 @@ public class Main
 {
     public static void main(String[] args)
     {
+        displayCurrentLocalDateTime();
+        displayCurrentUTCdateTime();
+
         displayJavaVersionInformation();
 
         String[] startingMonthChoices = new String[]{"February","March","April"};
@@ -14,6 +21,9 @@ public class Main
 
         int monthNum = getStartingMonthNumberFromMonthName(startingMonthName);
         System.out.format("Month number for %s is %d%n", startingMonthName ,monthNum);
+
+        displayCurrentLocalDateTime();
+        displayCurrentUTCdateTime();
     }
 
     private static int getStartingMonthNumberFromMonthName(String startingMonth)
@@ -46,6 +56,9 @@ public class Main
         return choices[selections.getSelectedIndex()];
     }
 
+    /**
+     * Display the version of Java this program is running under.
+     */
     private static void displayJavaVersionInformation()
     {
         String version = System.getProperty("java.version");
@@ -63,4 +76,21 @@ public class Main
 
     }
 
+    /**
+     * Display the current local Date/Time in a format close to ISO 8601 format
+     */
+    private static void displayCurrentLocalDateTime()
+    {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        System.out.println(dtf.format(LocalDateTime.now()));
+    }
+
+    /**
+     * Display the current UTC Date/Time in a format close to ISO 8601 format
+     */
+    private static void displayCurrentUTCdateTime()
+    {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        System.out.println(dtf.format(LocalDateTime.now(ZoneId.of("UTC"))));
+    }
 }

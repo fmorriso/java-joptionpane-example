@@ -60,11 +60,19 @@ public class Main
         return choices[selections.getSelectedIndex()];
     }
 
+    private static String getJavaVersion()
+    {
+        Runtime.Version runTimeVersion = Runtime.version();
+        return String.format("%s.%s.%s.%s", runTimeVersion.feature(), runTimeVersion.interim(), runTimeVersion.update(), runTimeVersion.patch());
+    }
+
     /**
      * Display the version of Java this program is running under.
      */
     private static void displayJavaVersionInformation()
     {
+        System.out.format("Java version: %s%n", getJavaVersion());
+
         String version = System.getProperty("java.version");
         System.out.println("java.version=" + version);
 

@@ -1,3 +1,6 @@
+import java.awt.Dimension;
+import java.awt.Toolkit;
+//
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -5,7 +8,8 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-
+import javax.swing.Icon;
+import javax.swing.UIManager;
 
 public class Main
 {
@@ -17,10 +21,11 @@ public class Main
         displayJavaVersionInformation();
 
         String[] startingMonthChoices = new String[]{"February","March","April"};
-        String startingMonthName = getSingleChoice("What month are you starting in?", startingMonthChoices);
+        String startingMonthName = getSingleChoice("Choose starting month", "Starting month?", startingMonthChoices);
 
         int monthNum = getMonthNumberFromMonthName(startingMonthName);
-        System.out.format("Month number for %s is %d%n", startingMonthName ,monthNum);
+        if (monthNum == -1) System.out.println("User did not choose a starting month");
+        else System.out.format("Month number for %s is %d%n", startingMonthName ,monthNum);
 
         displayCurrentLocalDateTime();
         displayCurrentUTCdateTime();
@@ -29,11 +34,12 @@ public class Main
     /** Get the month number for the specified month name.
      * @param monthName - a string containing the month name (e.g., "February")
      * @return - int in the range 1-12 of the corresponding month number or -1
-     *           if the month name is not recognized.
+     *           if the month name is null or not recognized.
      * @implNote The upper/lower case of the incoming month name is ignored.
      */
     private static int getMonthNumberFromMonthName(String monthName)
     {
+        if(monthName == null) return -1;
         switch (monthName.toLowerCase())
         {
             case "february":
@@ -48,16 +54,18 @@ public class Main
     }
 
     /** Display a question with multiple choices and return the single choice made by the user.
-     * @param question - The question to ask the user.
+     * @param title - The title for the pop-up dialog.
+     * @param question - The question to ask the user just above the list of available choices.
      * @param choices - An array of strings representing the choices available.
      * @return - The single choice chosen by the user.
      */
-    public static String getSingleChoice(String question, String[] choices)
+    public static String getSingleChoice(String title, String question, String[] choices)
     {
         JList<String> selections = new JList<String>(choices);
         selections.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JOptionPane.showMessageDialog(null, selections, question, JOptionPane.QUESTION_MESSAGE);
-        return choices[selections.getSelectedIndex()];
+        Icon icon = UIManager.getIcon("OptionPane.questionIcon");
+        Object choice = JOptionPane.showInputDialog(null, question, title, JOptionPane.QUESTION_MESSAGE, icon, choices, choices[0] );
+        return (String)choice;
     }
 
     private static String getJavaVersion()
@@ -104,5 +112,27 @@ public class Main
     {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         System.out.println(dtf.format(LocalDateTime.now(ZoneId.of("UTC"))));
+    }
+
+    /**
+     * Gets a rectangle that is scaled to a percentage of available device screen size,
+     * rounded up to the specified multiple.
+     *
+     * @param pct - the percentage (> 0 and < 1.0) of available device screen size to use.
+     * @param multipleOf - value to round up the scaled size to be a multiple of.
+     * @return - a Dimension object that holds the scaled width and height.
+     */
+    private static Dimension getScaledSize(double pct, int multipleOf)
+    {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        System.out.println(screenSize);
+        if (pct < 0.1 || pct > 1)
+            return screenSize;
+        // System.out.format("Screen width=%d, height=%d%n", screenSize.width, screenSize.height);
+        final int frameHeight = (int) (screenSize.height * pct) / multipleOf * multipleOf;
+        final int frameWidth = (int) (screenSize.width * pct) / multipleOf * multipleOf;
+        Dimension frameSize = new Dimension(frameWidth, frameHeight);
+        System.out.format("Frame width=%d, height=%d%n", frameWidth, frameHeight);
+        return frameSize;
     }
 }

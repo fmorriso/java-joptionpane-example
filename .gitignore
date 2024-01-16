@@ -3,6 +3,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 workspace.xml
+*.iml
 
 ### Eclipse ###
 .apt_generated

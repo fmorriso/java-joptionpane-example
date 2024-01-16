@@ -69,14 +69,14 @@ public class Main
         System.out.println("java.version=" + version);
 
         version = System.getProperty("java.specification.version");
-        System.out.println("java.specification.version=" + version);
+        System.out.format("java.specification.version=%s%n", version);
 
         version = System.getProperty("java.runtime.version");
-        System.out.println("java.runtime.version=" + version);
+        System.out.format("java.runtime.version=%s%n", version);
 
         Runtime.Version runTimeVersion = Runtime.version();
-        System.out.println("RunTime.Version=" + runTimeVersion);
-        System.out.println("RunTime.Version.feature()=" + runTimeVersion.feature()); // major version
+        System.out.format("RunTime.Version=%s%n", runTimeVersion);
+        System.out.format("RunTime.Version.feature()=%s%n", runTimeVersion.feature()); // major version
 
     }
 

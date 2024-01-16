@@ -19,17 +19,22 @@ public class Main
         String[] startingMonthChoices = new String[]{"February","March","April"};
         String startingMonthName = getSingleChoice("What month are you starting in?", startingMonthChoices);
 
-        int monthNum = getStartingMonthNumberFromMonthName(startingMonthName);
+        int monthNum = getMonthNumberFromMonthName(startingMonthName);
         System.out.format("Month number for %s is %d%n", startingMonthName ,monthNum);
 
         displayCurrentLocalDateTime();
         displayCurrentUTCdateTime();
     }
 
-    private static int getStartingMonthNumberFromMonthName(String startingMonth)
+    /** Get the month number for the specified month name.
+     * @param monthName - a string containing the month name (e.g., "February")
+     * @return - int in the range 1-12 of the corresponding month number or -1
+     *           if the month name is not recognized.
+     * @implNote The upper/lower case of the incoming month name is ignored.
+     */
+    private static int getMonthNumberFromMonthName(String monthName)
     {
-
-        switch (startingMonth.toLowerCase())
+        switch (monthName.toLowerCase())
         {
             case "february":
                 return 2;
@@ -39,7 +44,6 @@ public class Main
                 return 4;
             default:
                 return -1;
-
         }
     }
 

@@ -82,7 +82,7 @@ public class Main
         System.out.format("Java version: %s%n", getJavaVersion());
 
         String version = System.getProperty("java.version");
-        System.out.println("java.version=" + version);
+        System.out.format("java.version=%s%n", version);
 
         version = System.getProperty("java.specification.version");
         System.out.format("java.specification.version=%s%n", version);

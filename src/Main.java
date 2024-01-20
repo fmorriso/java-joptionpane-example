@@ -1,3 +1,5 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 //
@@ -6,9 +8,13 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 //
 import javax.swing.Icon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 public class Main
@@ -20,6 +26,8 @@ public class Main
 
         displayJavaVersionInformation();
 
+        displayJFrameGUI();
+
         String[] startingMonthChoices = new String[]{"February","March","April"};
         String startingMonthName = getSingleChoice("Choose starting month", "Starting month?", startingMonthChoices);
 
@@ -29,6 +37,8 @@ public class Main
 
         displayCurrentLocalDateTime();
         displayCurrentUTCdateTime();
+
+        System.exit(0);
     }
 
     /** Get the month number for the specified month name.
@@ -135,4 +145,39 @@ public class Main
         System.out.format("Frame width=%d, height=%d%n", frameWidth, frameHeight);
         return frameSize;
     }
+
+    private static void displayJFrameGUI()
+    {
+        Dimension scaledSize = getScaledSize(.75, 100);
+        // because we want a square shaped GUI, take the smallest of width or height because we also
+        // don't know the orientation (portrait vs. landscape) of the device we are running on.
+        int squareSize = Math.min(scaledSize.height, scaledSize.width);
+
+        JFrame frame = new JFrame("Workaround");
+        frame.setSize(squareSize, squareSize);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel pnl = new JPanel(new BorderLayout());
+        pnl.setSize(squareSize, squareSize);
+        pnl.setBackground(Color.CYAN);
+
+        JLabel lbl = new JLabel(String.format("Running Java version %s", getJavaVersion()));
+        lbl.setBackground(Color.RED.brighter().brighter());
+        lbl.setHorizontalAlignment(SwingConstants.CENTER);
+        lbl.setVerticalAlignment(SwingConstants.CENTER);
+        pnl.add(lbl);
+
+        frame.setContentPane(pnl);
+        pnl.requestFocus();
+        frame.setVisible(true);
+        try {
+            Thread.sleep(2000);            
+        } catch (InterruptedException e) {
+            System.out.println("InterruptedException");
+        } finally {
+            frame.setVisible(false);
+        }
+    }
+
 }

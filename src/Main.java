@@ -32,8 +32,11 @@ public class Main
         String startingMonthName = getSingleChoice("Choose starting month", "Starting month?", startingMonthChoices);
 
         int monthNum = getMonthNumberFromMonthName(startingMonthName);
-        if (monthNum == -1) System.out.println("User did not choose a starting month");
-        else System.out.format("Month number for %s is %d%n", startingMonthName ,monthNum);
+        String msg = "";
+        if (monthNum == -1) msg = "User did not choose a starting month";
+        else msg = String.format("Month number for %s is %d%n", startingMonthName ,monthNum);
+        System.out.println(msg);
+        JOptionPane.showMessageDialog(null, msg,"Starting Month Number", JOptionPane.INFORMATION_MESSAGE);
 
         displayCurrentLocalDateTime();
         displayCurrentUTCdateTime();

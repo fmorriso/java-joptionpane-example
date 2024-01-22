@@ -1,21 +1,8 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
-//
+import javax.swing.*;
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-//
-import javax.swing.Icon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 
 public class Main
 {
@@ -28,15 +15,19 @@ public class Main
 
         // displayJFrameGUI();
 
-        String[] startingMonthChoices = new String[]{"February","March","April"};
+        String[] startingMonthChoices = new String[]{"February", "March", "April"};
         String startingMonthName = getSingleChoice("Choose starting month", "Starting month?", startingMonthChoices);
 
         int monthNum = getMonthNumberFromMonthName(startingMonthName);
-        String msg = "";
-        if (monthNum == -1) msg = "User did not choose a starting month";
-        else msg = String.format("Month number for %s is %d%n", startingMonthName ,monthNum);
-        System.out.println(msg);
-        JOptionPane.showMessageDialog(null, msg,"Starting Month Number", JOptionPane.INFORMATION_MESSAGE);
+        displayMonthNumber(monthNum, startingMonthName);
+
+        int hoursDriven = getHoursDriven();
+        String msg = String.format("Hours Driven: %d", hoursDriven);
+        JOptionPane.showMessageDialog(null, msg, "Hours Driven", JOptionPane.INFORMATION_MESSAGE);
+
+        double milesDriven = getNumber("Miles Driven", "Enter miles driven");
+        msg = String.format("Hours Driven: %.1f", milesDriven);
+        JOptionPane.showMessageDialog(null, msg, "Miles Driven", JOptionPane.INFORMATION_MESSAGE);
 
         displayCurrentLocalDateTime();
         displayCurrentUTCdateTime();
@@ -44,41 +35,109 @@ public class Main
         System.exit(0);
     }
 
-    /** Get the month number for the specified month name.
+    private static int getWholeNumber(String title, String msg)
+    {
+        final int msgType = JOptionPane.INFORMATION_MESSAGE;
+        int n = 0;
+        while(n < 1)
+        {
+            String resp = JOptionPane.showInputDialog(null, title, msg, msgType);
+            try {
+                n = Integer.parseInt(resp);
+            } catch (Exception e) {
+                n = 0;
+            }
+        }
+        return n;
+    }
+
+    private static double getNumber(String title, String msg)
+    {
+        final int msgType = JOptionPane.INFORMATION_MESSAGE;
+        double n = 0;
+        while(n < 1)
+        {
+            String resp = JOptionPane.showInputDialog(null, title, msg, msgType);
+            try {
+                n = Double.parseDouble(resp);
+            } catch (Exception e) {
+                n = 0;
+            }
+        }
+        return n;
+    }
+    private static int getHoursDriven()
+    {
+        String title = "Hours driven";
+        String msg = "Enter hours driven";
+        return getWholeNumber(title, msg);
+    }
+
+    private static void displayMonthNumber(int monthNumber, String monthName)
+    {
+        String title = "Starting month number";
+        String msg = "";
+        int msgType = JOptionPane.INFORMATION_MESSAGE;
+        if (monthNumber == -1)
+        {
+            msg = "User did not choose a starting month";
+            msgType = JOptionPane.WARNING_MESSAGE;
+            title = "Warning";
+        } else
+        {
+            msg = String.format("Month number for %s is %d%n", monthName, monthNumber);
+        }
+        System.out.println(msg);
+        JOptionPane.showMessageDialog(null, msg, title, msgType);
+    }
+
+
+    /**
+     * Get the month number for the specified month name.
+     *
      * @param monthName - a string containing the month name (e.g., "February")
      * @return - int in the range 1-12 of the corresponding month number or -1
-     *           if the month name is null or not recognized.
+     * if the month name is null or not recognized.
      * @implNote The upper/lower case of the incoming month name is ignored.
      */
     private static int getMonthNumberFromMonthName(String monthName)
     {
-        if(monthName == null) return -1;
-        switch (monthName.toLowerCase())
+        if (monthName == null) return -1;
+        // look at just the first 3 characters and ignore case
+        switch (monthName.substring(0,3).toLowerCase())
         {
-            case "february":
+            case "feb":
                 return 2;
-            case "march":
+            case "mar":
                 return 3;
-            case "april":
+            case "apr":
                 return 4;
             default:
                 return -1;
         }
     }
 
-    /** Display a question with multiple choices and return the single choice made by the user.
-     * @param title - The title for the pop-up dialog.
+    /**
+     * Display a question with multiple choices and return the single choice made by the user.
+     *
+     * @param title    - The title for the pop-up dialog.
      * @param question - The question to ask the user just above the list of available choices.
-     * @param choices - An array of strings representing the choices available.
+     * @param choices  - An array of strings representing the choices available.
      * @return - The single choice chosen by the user.
      */
     public static String getSingleChoice(String title, String question, String[] choices)
     {
-        JList<String> selections = new JList<String>(choices);
-        selections.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        Icon icon = UIManager.getIcon("OptionPane.questionIcon");
-        Object choice = JOptionPane.showInputDialog(null, question, title, JOptionPane.QUESTION_MESSAGE, icon, choices, choices[0] );
-        return (String)choice;
+        String choice = "";
+        // force user to choose something by ignoreing clicks on the Cancel button
+        while(choice.equals(""))
+        {
+            JList<String> selections = new JList<String>(choices);
+            selections.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            Icon icon = UIManager.getIcon("OptionPane.questionIcon");
+            Object response = JOptionPane.showInputDialog(null, question, title, JOptionPane.QUESTION_MESSAGE, icon, choices, choices[0]);
+            if(response != null) choice = (String)response;
+        }
+        return choice;
     }
 
     private static String getJavaVersion()
@@ -131,7 +190,7 @@ public class Main
      * Gets a rectangle that is scaled to a percentage of available device screen size,
      * rounded up to the specified multiple.
      *
-     * @param pct - the percentage (> 0 and < 1.0) of available device screen size to use.
+     * @param pct        - the percentage (> 0 and < 1.0) of available device screen size to use.
      * @param multipleOf - value to round up the scaled size to be a multiple of.
      * @return - a Dimension object that holds the scaled width and height.
      */
@@ -174,11 +233,14 @@ public class Main
         frame.setContentPane(pnl);
         pnl.requestFocus();
         frame.setVisible(true);
-        try {
-            Thread.sleep(2000);            
-        } catch (InterruptedException e) {
+        try
+        {
+            Thread.sleep(2000);
+        } catch (InterruptedException e)
+        {
             System.out.println("InterruptedException");
-        } finally {
+        } finally
+        {
             frame.setVisible(false);
         }
     }

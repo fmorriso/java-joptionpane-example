@@ -1,5 +1,8 @@
 public class GameStatus {
     private int hoursDriven = 0;
+    private double milesDriven = 0;
+    private double fuelRemaining = 100;
+
     /**
      * @return the hoursDriven
      */
@@ -12,7 +15,7 @@ public class GameStatus {
     public void setHoursDriven(int hoursDriven) {
         this.hoursDriven = hoursDriven;
     }
-    private double milesDriven = 0;
+
     /**
      * @return the milesDriven
      */
@@ -26,7 +29,7 @@ public class GameStatus {
         this.milesDriven = milesDriven;
     }
 
-    private double fuelRemaining = 100;
+
     /**
      * @return the fuelRemaining
      */

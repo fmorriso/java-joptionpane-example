@@ -21,11 +21,11 @@ public class Main
         int monthNum = getMonthNumberFromMonthName(startingMonthName);
         displayMonthNumber(monthNum, startingMonthName);
 
-        int hoursDriven = getHoursDriven();
+        int hoursDriven = getWholeNumber("Hours Driven", "Enter number of hours");
         String msg = String.format("Hours Driven: %d", hoursDriven);
         JOptionPane.showMessageDialog(null, msg, "Hours Driven", JOptionPane.INFORMATION_MESSAGE);
 
-        double milesDriven = getNumber("Miles Driven", "Enter miles driven");
+        double milesDriven = getDecimalNumber("Miles Driven", "Enter miles driven");
         msg = String.format("Hours Driven: %.1f", milesDriven);
         JOptionPane.showMessageDialog(null, msg, "Miles Driven", JOptionPane.INFORMATION_MESSAGE);
 
@@ -35,6 +35,13 @@ public class Main
         System.exit(0);
     }
 
+    /** Prompts the user to enter a whole number and returns it.
+     * @param title - the title to use when presenting the dialog box to the user.
+     * @param msg - helpful text to tell the user what it is they are entering
+     * @return - the whole number the user typed in.
+     * @implNote - if any non-numeric or numbers with a decimal point are typed into the box, it will pop right back up until
+     *             the user enters a valid value.
+     */
     private static int getWholeNumber(String title, String msg)
     {
         final int msgType = JOptionPane.INFORMATION_MESSAGE;
@@ -51,7 +58,14 @@ public class Main
         return n;
     }
 
-    private static double getNumber(String title, String msg)
+    /** Prompts the user to enter a decimal number and returns it.
+     * @param title - the title to use when presenting the dialog box to the user.
+     * @param msg - helpful text to tell the user what it is they are entering
+     * @return - the decimal number the user typed in.
+     * @implNote - if any non-numeric are typed into the box, it will pop right back up until
+     *             the user enters a valid value.
+     */
+    private static double getDecimalNumber(String title, String msg)
     {
         final int msgType = JOptionPane.INFORMATION_MESSAGE;
         double n = 0;
@@ -65,12 +79,6 @@ public class Main
             }
         }
         return n;
-    }
-    private static int getHoursDriven()
-    {
-        String title = "Hours driven";
-        String msg = "Enter hours driven";
-        return getWholeNumber(title, msg);
     }
 
     private static void displayMonthNumber(int monthNumber, String monthName)

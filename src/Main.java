@@ -23,7 +23,7 @@ public class Main
         int monthNum = getMonthNumberFromMonthName(startingMonthName);
         displayMonthNumber(monthNum, startingMonthName);
 
-        gs.setHoursDriven(1); // just s way to show that when we call updateHoursDriven, the total really does change
+        gs.setHoursDriven(1); // just a way to show that when we call updateHoursDriven, the total really does change
         int hoursDriven = InputUtils.getWholeNumber("Hours Driven", "Enter number of hours");
         String msg = String.format("Additional Hours Driven: %d", hoursDriven);
         JOptionPane.showMessageDialog(null, msg, "Hours Driven", JOptionPane.INFORMATION_MESSAGE);
@@ -31,7 +31,7 @@ public class Main
         msg = String.format("Total hours driven so far: %d", gs.getHoursDriven());
         JOptionPane.showMessageDialog(null, msg, "Total Hours Driven", JOptionPane.INFORMATION_MESSAGE);
 
-        gs.setMilesDriven(1); // just s way to show that when we call updateMilesDriven, the total really does change
+        gs.setMilesDriven(1); // just a way to show that when we call updateMilesDriven, the total really does change
         double milesDriven = InputUtils.getDecimalNumber("Miles Driven", "Enter miles driven");
         msg = String.format("Additional Miles Driven: %.1f", milesDriven);
         JOptionPane.showMessageDialog(null, msg, "Miles Driven", JOptionPane.INFORMATION_MESSAGE);
@@ -46,7 +46,10 @@ public class Main
     }
 
 
-
+    /** Displays the month number (1-12) that corresponds to the specified month name
+     * @param monthNumber
+     * @param monthName
+     */
     private static void displayMonthNumber(int monthNumber, String monthName)
     {
         String title = "Starting month number";

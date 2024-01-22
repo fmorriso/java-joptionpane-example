@@ -26,7 +26,7 @@ public class Main
 
         displayJavaVersionInformation();
 
-        displayJFrameGUI();
+        // displayJFrameGUI();
 
         String[] startingMonthChoices = new String[]{"February","March","April"};
         String startingMonthName = getSingleChoice("Choose starting month", "Starting month?", startingMonthChoices);

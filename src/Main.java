@@ -18,7 +18,7 @@ public class Main
         // displayJFrameGUI();
 
         String[] startingMonthChoices = new String[]{"February", "March", "April"};
-        String startingMonthName = getSingleChoice("Choose starting month", "Starting month?", startingMonthChoices);
+        String startingMonthName = InputUtils.getSingleChoice("Choose starting month", "Starting month?", startingMonthChoices);
 
         int monthNum = getMonthNumberFromMonthName(startingMonthName);
         displayMonthNumber(monthNum, startingMonthName);
@@ -94,28 +94,6 @@ public class Main
         }
     }
 
-    /**
-     * Display a question with multiple choices and return the single choice made by the user.
-     *
-     * @param title    - The title for the pop-up dialog.
-     * @param question - The question to ask the user just above the list of available choices.
-     * @param choices  - An array of strings representing the choices available.
-     * @return - The single choice chosen by the user.
-     */
-    public static String getSingleChoice(String title, String question, String[] choices)
-    {
-        String choice = "";
-        // force user to choose something by ignoreing clicks on the Cancel button
-        while(choice.equals(""))
-        {
-            JList<String> selections = new JList<String>(choices);
-            selections.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            Icon icon = UIManager.getIcon("OptionPane.questionIcon");
-            Object response = JOptionPane.showInputDialog(null, question, title, JOptionPane.QUESTION_MESSAGE, icon, choices, choices[0]);
-            if(response != null) choice = (String)response;
-        }
-        return choice;
-    }
 
     private static String getJavaVersion()
     {

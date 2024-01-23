@@ -1,4 +1,8 @@
-import javax.swing.*;
+import javax.swing.Icon;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
 
 public class InputUtils
 {
@@ -21,6 +25,7 @@ public class InputUtils
             selections.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             Icon icon = UIManager.getIcon("OptionPane.questionIcon");
             Object response = JOptionPane.showInputDialog(null, question, title, JOptionPane.QUESTION_MESSAGE, icon, choices, choices[0]);
+            // if the user did not click the Cancel button, capture the response.
             if(response != null) choice = (String)response;
         }
         return choice;

@@ -80,11 +80,11 @@ public class Main {
      *
      * @param monthName - a string containing the month name (e.g., "February")
      * @return - int in the range 1-12 of the corresponding month number or -1 if
-     *         the month name is null or not recognized.
+     *           the month name is null or not recognized.
      * @implNote The upper/lower case of the incoming month name is ignored.
      */
     private static int getMonthNumberFromMonthName(String monthName) {
-        if (monthName == null)
+        if (monthName == null || monthName.length() < 3)
             return -1;
         // look at just the first 3 characters and ignore case
         switch (monthName.substring(0, 3).toLowerCase()) {

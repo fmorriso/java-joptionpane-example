@@ -64,8 +64,8 @@ public class InputUtils
     public static double getDecimalNumber(String title, String msg)
     {
         final int msgType = JOptionPane.INFORMATION_MESSAGE;
-        double n = 0;
-        while(n < 1)
+        double n = Double.MIN_VALUE;
+        while(n == Double.MIN_VALUE)
         {
             String resp = JOptionPane.showInputDialog(null, title, msg, msgType);
             try {

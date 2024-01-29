@@ -18,10 +18,10 @@ public class InputUtils
     public static String getSingleChoice(String title, String question, String[] choices)
     {
         String choice = "";
-        // force user to choose something by ignoreing clicks on the Cancel button
-        while(choice.equals(""))
+        // force user to choose something by ignoring clicks on the Cancel button
+        while(choice.isEmpty())
         {
-            JList<String> selections = new JList<String>(choices);
+            JList<String> selections = new JList<>(choices);
             selections.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             Icon icon = UIManager.getIcon("OptionPane.questionIcon");
             Object response = JOptionPane.showInputDialog(null, question, title, JOptionPane.QUESTION_MESSAGE, icon, choices, choices[0]);

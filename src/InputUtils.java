@@ -41,8 +41,8 @@ public class InputUtils
     public static int getWholeNumber(String title, String msg)
     {
         final int msgType = JOptionPane.INFORMATION_MESSAGE;
-        int n = 0;
-        while(n < 1)
+        int n = Integer.MIN_VALUE;
+        while(n == Integer.MIN_VALUE)
         {
             String resp = JOptionPane.showInputDialog(null, title, msg, msgType);
             try {

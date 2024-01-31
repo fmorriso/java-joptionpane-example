@@ -71,7 +71,7 @@ public class InputUtils
             try {
                 n = Double.parseDouble(resp);
             } catch (Exception e) {
-                n = 0;
+                n = Double.MIN_VALUE;
             }
         }
         return n;

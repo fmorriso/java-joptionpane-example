@@ -20,19 +20,19 @@ public class Main {
         displayJavaVersionInformation();
 
         GameStatus gs = new GameStatus();
-        String msg;
+        String msg = "";
         // displayJFrameGUI();
 
-        int minMonth = 1, maxMonth = 12;
+        final int minMonth = 1, maxMonth = 12;
         int startMonth = InputUtils.getWholeNumberInRange("Enter starting month", minMonth, maxMonth);
         msg = String.format("The starting month is: %d", startMonth);
-        JOptionPane.showMessageDialog(null, msg, "Starting month", JOptionPane.INFORMATION_MESSAGE);
+        InputUtils.displayMessage(msg, "Starting month");
 
-
-        double minAFE = 10, maxAFE = 100;
+        final double minAFE = 10, maxAFE = 100;
         double afe = InputUtils.getDecimalNumberInRange("Enter average fuel economy", minAFE, maxAFE);
         msg = String.format("The average fuel economy is: %.1f", afe);
-        JOptionPane.showMessageDialog(null, msg, "Hours Driven", JOptionPane.INFORMATION_MESSAGE);
+        InputUtils.displayMessage(msg, "Hours driven");
+        //JOptionPane.showMessageDialog(null, msg, "Hours Driven", JOptionPane.INFORMATION_MESSAGE);
 
         String[] startingMonthChoices = new String[] {"February", "March", "April"};
         String startingMonthName = InputUtils.getSingleChoice("Choose starting month", "Starting month?",
@@ -45,19 +45,20 @@ public class Main {
                               // change
         int hoursDriven = InputUtils.getWholeNumber("Hours Driven", "Enter number of hours");
         msg = String.format("Additional Hours Driven: %d", hoursDriven);
-        JOptionPane.showMessageDialog(null, msg, "Hours Driven", JOptionPane.INFORMATION_MESSAGE);
+        InputUtils.displayMessage(msg, "Hours Driven");      
         gs.updateHoursDriven(hoursDriven);
         msg = String.format("Total hours driven so far: %d", gs.getHoursDriven());
-        JOptionPane.showMessageDialog(null, msg, "Total Hours Driven", JOptionPane.INFORMATION_MESSAGE);
+        InputUtils.displayMessage(msg, "Total Hours Driven");
+        
 
         gs.setMilesDriven(1); // just a way to show that when we call updateMilesDriven, the total really does
                               // change
         double milesDriven = InputUtils.getDecimalNumber("Miles Driven", "Enter miles driven");
         msg = String.format("Additional Miles Driven: %.1f", milesDriven);
-        JOptionPane.showMessageDialog(null, msg, "Miles Driven", JOptionPane.INFORMATION_MESSAGE);
+        InputUtils.displayMessage(msg, "Miles Driven");        
         gs.updateMilesDriven(milesDriven);
         msg = String.format("Total miles driven so far: %.1f", gs.getMilesDriven());
-        JOptionPane.showMessageDialog(null, msg, "Total miles driven", JOptionPane.INFORMATION_MESSAGE);
+        InputUtils.displayMessage(msg, "Total Miles Driven");      
 
         displayCurrentLocalDateTime();
         displayCurrentUTCdateTime();

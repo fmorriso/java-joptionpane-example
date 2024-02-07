@@ -23,8 +23,14 @@ public class Main {
         String msg;
         // displayJFrameGUI();
 
-        double min = 10, max = 100;
-        double afe = InputUtils.getDecimalNumberInRange("Enter average fuel economy", min, max);
+        int minMonth = 1, maxMonth = 12;
+        int startMonth = InputUtils.getWholeNumberInRange("Enter starting month", minMonth, maxMonth);
+        msg = String.format("The starting month is: %d", startMonth);
+        JOptionPane.showMessageDialog(null, msg, "Starting month", JOptionPane.INFORMATION_MESSAGE);
+
+
+        double minAFE = 10, maxAFE = 100;
+        double afe = InputUtils.getDecimalNumberInRange("Enter average fuel economy", minAFE, maxAFE);
         msg = String.format("The average fuel economy is: %.1f", afe);
         JOptionPane.showMessageDialog(null, msg, "Hours Driven", JOptionPane.INFORMATION_MESSAGE);
 

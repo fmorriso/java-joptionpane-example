@@ -44,7 +44,7 @@ public class InputUtils
         int n = Integer.MIN_VALUE;
         while(n == Integer.MIN_VALUE)
         {
-            String resp = JOptionPane.showInputDialog(null, title, msg, msgType);
+            String resp = JOptionPane.showInputDialog(null, msg, title, msgType);
             try {
                 n = Integer.parseInt(resp);
             } catch (Exception e) {
@@ -67,13 +67,39 @@ public class InputUtils
         double n = Double.MIN_VALUE;
         while(n == Double.MIN_VALUE)
         {
-            String resp = JOptionPane.showInputDialog(null, title, msg, msgType);
+            String resp = JOptionPane.showInputDialog(null, msg, title, msgType);
             try {
                 n = Double.parseDouble(resp);
             } catch (Exception e) {
                 n = Double.MIN_VALUE;
             }
         }
+        return n;
+    }
+
+    
+    /** Prompts the user to enter a decimal number within a specified range and returns it.
+     * @param title - the title to use when presenting the dialog box to the user.
+     * @param min - the minimum value in the range of allowable inputs.
+     * @param max - the maximum value in the range of allowable inputs.
+     * @return - the whole number the user typed in.
+     */
+    public static int getWholeNumberInRange(String title, int min, int max)
+    {
+        final int msgType = JOptionPane.INFORMATION_MESSAGE;
+        int n = Integer.MIN_VALUE;
+        String msg = String.format("Enter a whole number between %d and %d", min, max);
+        while(n < min || n > max)
+        {
+            String resp = JOptionPane.showInputDialog(null, msg, title, msgType);
+            try {
+                n = Integer.parseInt(resp);
+            } catch (Exception e) {
+                n = Integer.MIN_VALUE;
+            }
+        }
+
+
         return n;
     }
 
@@ -87,10 +113,10 @@ public class InputUtils
     {
         final int msgType = JOptionPane.INFORMATION_MESSAGE;
         double n = Double.MIN_VALUE;
-        String msg = String.format("Enter a decimal number between %s and %s", min, max);
+        String msg = String.format("Enter a decimal number between %.1f and %.1f", min, max);
         while(n < min || n > max)
         {
-            String resp = JOptionPane.showInputDialog(null, title, msg, msgType);
+            String resp = JOptionPane.showInputDialog(null, msg, title, msgType);
             try {
                 n = Double.parseDouble(resp);
             } catch (Exception e) {

@@ -48,7 +48,7 @@ public class InputUtils
             try {
                 n = Integer.parseInt(resp);
             } catch (Exception e) {
-                n = 0;
+                n = Integer.MIN_VALUE;
             }
         }
         return n;
@@ -74,6 +74,31 @@ public class InputUtils
                 n = Double.MIN_VALUE;
             }
         }
+        return n;
+    }
+
+    /** Prompts the user to enter a decimal number within a specified range and returns it.
+     * @param title - the title to use when presenting the dialog box to the user.
+     * @param min - the minimum value in the range of allowable inputs.
+     * @param max - the maximum value in the range of allowable inputs.
+     * @return - the decimal number the user typed in.
+     */
+    public static double getDecimalNumberInRange(String title, double min, double max)
+    {
+        final int msgType = JOptionPane.INFORMATION_MESSAGE;
+        double n = Double.MIN_VALUE;
+        String msg = String.format("Enter a decimal number between %s and %s", min, max);
+        while(n < min || n > max)
+        {
+            String resp = JOptionPane.showInputDialog(null, title, msg, msgType);
+            try {
+                n = Double.parseDouble(resp);
+            } catch (Exception e) {
+                n = Double.MIN_VALUE;
+            }
+        }
+
+
         return n;
     }
 

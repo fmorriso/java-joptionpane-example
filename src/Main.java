@@ -20,8 +20,13 @@ public class Main {
         displayJavaVersionInformation();
 
         GameStatus gs = new GameStatus();
-
+        String msg;
         // displayJFrameGUI();
+
+        double min = 10, max = 100;
+        double afe = InputUtils.getDecimalNumberInRange("Enter average fuel economy", min, max);
+        msg = String.format("The average fuel economy is: %.1f", afe);
+        JOptionPane.showMessageDialog(null, msg, "Hours Driven", JOptionPane.INFORMATION_MESSAGE);
 
         String[] startingMonthChoices = new String[] {"February", "March", "April"};
         String startingMonthName = InputUtils.getSingleChoice("Choose starting month", "Starting month?",
@@ -33,7 +38,7 @@ public class Main {
         gs.setHoursDriven(1); // just a way to show that when we call updateHoursDriven, the total really does
                               // change
         int hoursDriven = InputUtils.getWholeNumber("Hours Driven", "Enter number of hours");
-        String msg = String.format("Additional Hours Driven: %d", hoursDriven);
+        msg = String.format("Additional Hours Driven: %d", hoursDriven);
         JOptionPane.showMessageDialog(null, msg, "Hours Driven", JOptionPane.INFORMATION_MESSAGE);
         gs.updateHoursDriven(hoursDriven);
         msg = String.format("Total hours driven so far: %d", gs.getHoursDriven());

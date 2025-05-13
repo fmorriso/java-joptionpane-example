@@ -1,8 +1,4 @@
-import javax.swing.Icon;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.UIManager;
+import javax.swing.*;
 
 public class InputUtils
 {
@@ -21,7 +17,7 @@ public class InputUtils
         // force user to choose something by ignoring clicks on the Cancel button
         while(choice.isEmpty())
         {
-            JList<String> selections = new JList<>(choices);
+            JList<String> selections = new JList<String>(choices);
             selections.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             Icon icon = UIManager.getIcon("OptionPane.questionIcon");
             Object response = JOptionPane.showInputDialog(null, question, title, JOptionPane.QUESTION_MESSAGE, icon, choices, choices[0]);
@@ -29,6 +25,36 @@ public class InputUtils
             if(response != null) choice = (String)response;
         }
         return choice;
+    }
+
+    /**
+     * Display a question with multiple Enum choices and return the single choice made by the user.
+     *
+     * @param title - The title for the pop-up dialog.
+     * @param question - The question to ask the user just above the list of available choices.
+     * @param enumClass - The class name of the Enum
+     * @return - The single Enum choice of the user
+     *
+     */
+    public static <T extends Enum<T>> T getSingleEnumChoice(String title, String question, Class<T> enumClass) {
+        T[] enumConstants = enumClass.getEnumConstants();
+        String[] choices = new String[enumConstants.length];
+        for (int i = 0; i < enumConstants.length; i++) {
+            choices[i] = enumConstants[i].name();
+        }
+
+        String selected = (String) JOptionPane.showInputDialog(
+                null,
+                question,
+                title,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                choices,
+                choices[0] // default selection
+        );
+        if (selected == null) return null;
+
+        return Enum.valueOf(enumClass, selected);
     }
 
     /** Prompts the user to enter a whole number and returns it.
@@ -77,7 +103,7 @@ public class InputUtils
         return n;
     }
 
-    
+
     /** Prompts the user to enter a decimal number within a specified range and returns it.
      * @param title - the title to use when presenting the dialog box to the user.
      * @param min - the minimum value in the range of allowable inputs.
@@ -136,5 +162,31 @@ public class InputUtils
     public static void displayMessage(String msg, String title)
     {
         JOptionPane.showMessageDialog(null, msg, title, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public static boolean askYesNoQuestion(String title, String question, JComponent parent) {
+
+        int result = JOptionPane.showConfirmDialog(
+                parent,
+                question,
+                title,
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        return result == JOptionPane.YES_OPTION;
+    }
+
+    public static boolean askYesNoQuestion(String title, String question) {
+        return askYesNoQuestion(title, question, null);
+    }
+
+    public static String getAnswer(String title, String question) {
+        return (String) JOptionPane.showInputDialog(
+                null,
+                question,
+                title,
+                JOptionPane.QUESTION_MESSAGE
+        );
     }
 }

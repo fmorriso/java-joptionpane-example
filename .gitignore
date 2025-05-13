@@ -2,9 +2,15 @@
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-workspace.xml
-*.iml
+/.idea
 .idea/
+.idea/**
+.idea/misc.xml
+.idea/workspace.xml
+workspace.xml
+.idea/**/workspace.xml
+*.iml
+JOptionPaneExample.iml
 
 ### Eclipse ###
 .apt_generated
